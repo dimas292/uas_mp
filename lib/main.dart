@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:portofolio/components/card.dart';
-import 'package:portofolio/features/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,17 +30,6 @@ class _MyAppState extends State<MyApp> {
   Color currentSeedColor = seedColors[0]; 
 
 
-  void changeThemeColor() {
-    setState(() {
-      // Pilih warna acak dari daftar, pastikan tidak sama dengan warna sebelumnya
-      Color newColor;
-      do {
-        newColor = seedColors[Random().nextInt(seedColors.length)];
-      } while (newColor == currentSeedColor && seedColors.length > 1);
-      
-      currentSeedColor = newColor;
-    });
-  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -62,16 +47,16 @@ class _MyAppState extends State<MyApp> {
       ),
       
       routes: {
-        '/' : (context) => SplashScreen(),
-        '/home' : (context) => MyHomeApps(onChangeTheme: changeThemeColor)
+  
+        '/' : (context) => MyHomeApps()
       },
     );
   }
 }
 
 class MyHomeApps extends StatelessWidget {
-  final VoidCallback onChangeTheme; 
-  const MyHomeApps({super.key, required this.onChangeTheme});
+ 
+  const MyHomeApps({super.key, required});
 
 
   @override
@@ -83,22 +68,6 @@ class MyHomeApps extends StatelessWidget {
         preferredSize: const Size.fromHeight(60.0),
 
         child: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () => {
-                onChangeTheme()
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/change-2.svg',
-                width: 50,
-                height: 50,
-                colorFilter: ColorFilter.mode(
-                  Colors.white60, // Warna icon
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-          ],
           title: Text(
             'Portofolio',
             style: TextStyle(
